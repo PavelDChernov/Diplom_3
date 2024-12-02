@@ -1,13 +1,15 @@
 import service.abstractions.AbstractLoginTest;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
-import jdk.jfr.Description;
+import io.qameta.allure.Description;
 import org.junit.Assert;
 import org.junit.Test;
-import service.page_object.BurgerForgotPasswordPage;
-import service.page_object.BurgerLoginPage;
-import service.page_object.BurgerMainPage;
-import service.page_object.BurgerRegistrationPage;
+import service.pageobject.BurgerForgotPasswordPage;
+import service.pageobject.BurgerLoginPage;
+import service.pageobject.BurgerMainPage;
+import service.pageobject.BurgerRegistrationPage;
+
+import static service.pageurls.BurgerPageUrls.*;
 
 public class LoginTests extends AbstractLoginTest {
     private BurgerMainPage mainPage;
@@ -20,7 +22,7 @@ public class LoginTests extends AbstractLoginTest {
     @Description("User can login by login button on main page")
     public void userLoginByLoginButtonMainPage() {
         // подготовка
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(MAIN_PAGE_URL);
         mainPage = new BurgerMainPage(driver);
         mainPage.waitForPageLoad();
         // тест
@@ -38,7 +40,7 @@ public class LoginTests extends AbstractLoginTest {
     @Description("User can login by profile button on main page")
     public void userLoginByProfileButtonMainPage() {
         // подготовка
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(MAIN_PAGE_URL);
         mainPage = new BurgerMainPage(driver);
         mainPage.waitForPageLoad();
         // тест
@@ -56,7 +58,7 @@ public class LoginTests extends AbstractLoginTest {
     @Description("User can login by login button on registration page")
     public void userLoginByLoginButtonRegistrationPage() {
         // подготовка
-        driver.get("https://stellarburgers.nomoreparties.site/register");
+        driver.get(REGISTRATION_PAGE_URL);
         registrationPage = new BurgerRegistrationPage(driver);
         registrationPage.waitForPageLoad();
         // тест
@@ -75,7 +77,7 @@ public class LoginTests extends AbstractLoginTest {
     @Description("User can login by login button on forgot password page")
     public void userLoginByLoginButtonForgotPasswordPage() {
         // подготовка
-        driver.get("https://stellarburgers.nomoreparties.site/forgot-password");
+        driver.get(FORGOT_PASSWORD_PAGE_URL);
         forgotPasswordPage = new BurgerForgotPasswordPage(driver);
         forgotPasswordPage.waitForPageLoad();
         // тест

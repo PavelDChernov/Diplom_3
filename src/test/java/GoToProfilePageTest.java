@@ -1,18 +1,21 @@
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
-import jdk.jfr.Description;
+import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import service.abstractions.AbstractTest;
 import service.driver.WebDriverCreator;
 import service.json.User;
-import service.page_object.BurgerMainPage;
-import service.page_object.BurgerProfilePage;
+import service.pageobject.BurgerMainPage;
+import service.pageobject.BurgerProfilePage;
 import service.utilities.TestUtilities;
 
-public class GoToProfilePageTest {
+import static service.pageurls.BurgerPageUrls.LOGIN_PAGE_URL;
+
+public class GoToProfilePageTest extends AbstractTest {
     private WebDriver driver;
     private User user;
     private BurgerMainPage mainPage;
@@ -21,7 +24,7 @@ public class GoToProfilePageTest {
     @Before
     public void setUp() {
         driver = WebDriverCreator.getWebDriver();
-        driver.get("https://stellarburgers.nomoreparties.site/login");
+        driver.get(LOGIN_PAGE_URL);
         user = TestUtilities.getNewRegisteredUser();
         TestUtilities.loginUserFromLoginPage(user, driver);
         mainPage = new BurgerMainPage(driver);
@@ -40,7 +43,6 @@ public class GoToProfilePageTest {
     @After
     public void tearDown() {
         TestUtilities.deleteUser(user);
-        user = null;
         driver.quit();
     }
 

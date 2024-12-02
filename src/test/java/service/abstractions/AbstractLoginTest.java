@@ -7,7 +7,7 @@ import service.driver.WebDriverCreator;
 import service.json.User;
 import service.utilities.TestUtilities;
 
-public class AbstractLoginTest {
+public class AbstractLoginTest extends AbstractTest {
     protected WebDriver driver;
     protected User user;
 
@@ -20,7 +20,6 @@ public class AbstractLoginTest {
     @After
     public void tearDown() {
         TestUtilities.deleteUser(user);
-        user = null;
         driver.quit();
     }
 }

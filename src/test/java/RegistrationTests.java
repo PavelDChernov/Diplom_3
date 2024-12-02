@@ -1,31 +1,33 @@
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
-import jdk.jfr.Description;
+import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import service.abstractions.AbstractTest;
 import service.driver.WebDriverCreator;
 import service.utilities.TestUtilities;
-import service.page_object.BurgerLoginPage;
-import service.page_object.BurgerRegistrationPage;
-
+import service.pageobject.BurgerLoginPage;
+import service.pageobject.BurgerRegistrationPage;
 import java.util.Random;
 
-public class RegistrationTests {
+import static service.pageurls.BurgerPageUrls.REGISTRATION_PAGE_URL;
+
+public class RegistrationTests extends AbstractTest {
     private WebDriver driver;
     private BurgerRegistrationPage registrationPage;
     private BurgerLoginPage loginPage;
 
-    private final String NAME = "Никодим";
-    private final String EMAIL = String.format("uitest%s@sometestmail.su", new Random().nextInt(100500)).toLowerCase();
-    private final String PASSWORD = "derP@r0l";
+    private static final String NAME = "Никодим";
+    private static final String PASSWORD = "derP@r0l";
+    private final String email = String.format("uitest%s@sometestmail.su", new Random().nextInt(100500)).toLowerCase();
 
     @Before
     public void setUp() {
         driver = WebDriverCreator.getWebDriver();
-        driver.get("https://stellarburgers.nomoreparties.site/register");
+        driver.get(REGISTRATION_PAGE_URL);
         registrationPage = new BurgerRegistrationPage(driver);
         registrationPage.waitForPageLoad();
     }
@@ -34,19 +36,19 @@ public class RegistrationTests {
     @DisplayName("Check successfull registration of new user")
     @Description("New user can be successfully registered")
     public void successfullUserRegistration() {
-        fillRegistrationForm(NAME, EMAIL, PASSWORD);
+        fillRegistrationForm(NAME, email, PASSWORD);
         clickRegistrationButton();
         loginPage = new BurgerLoginPage(driver);
         checkLoginPageLoaded();
         // удаление тестовых данных включил в тело теста, т.к. используется только в нем и указывать в @After нецелесообразно
-        TestUtilities.deleteUser(EMAIL,PASSWORD);
+        TestUtilities.deleteUser(email,PASSWORD);
     }
 
     @Test
     @DisplayName("Check error on registration with short password")
     @Description("Error shown if password is short")
     public void incorrectPasswordErrorDuringRegistration() {
-        setUserPassword("12345");
+        setUserPassword("P@r0L");
         clickRegistrationButton();
         checkPasswordErrorShown();
         checkPasswordErrorText("Некорректный пароль");

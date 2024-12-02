@@ -1,20 +1,16 @@
 package service.utilities;
 
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.openqa.selenium.WebDriver;
 import service.api.BurgerApi;
-import service.json.AuthData;
 import service.json.User;
-import service.page_object.BurgerLoginPage;
-import service.page_object.BurgerMainPage;
-
+import service.pageobject.BurgerLoginPage;
+import service.pageobject.BurgerMainPage;
 import java.util.Random;
 
 public class TestUtilities {
     // Создать пользователя
     public static User getNewRegisteredUser() {
-        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         User user = getNewUser();
         Response response = BurgerApi.sendPostAuthRegister(user);
         compareResponseStatusCode(response,200);
@@ -23,7 +19,6 @@ public class TestUtilities {
 
     // Удалить пользователя
     public static void deleteUser(String email, String password) {
-        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         Response response = BurgerApi.sendPostAuthLogin(email, password);
         compareResponseStatusCode(response,200);
         String accessToken = getAccessToken(response);
@@ -32,7 +27,6 @@ public class TestUtilities {
 
     // Удалить пользователя
     public static void deleteUser(User user) {
-        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         Response response = BurgerApi.sendPostAuthLogin(user.getAuthData());
         compareResponseStatusCode(response,200);
         String accessToken = getAccessToken(response);

@@ -1,13 +1,15 @@
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
-import jdk.jfr.Description;
+import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import service.driver.WebDriverCreator;
-import service.page_object.BurgerMainPage;
+import service.pageobject.BurgerMainPage;
+
+import static service.pageurls.BurgerPageUrls.MAIN_PAGE_URL;
 
 public class NavigationBetweenConstructorSectionsTests {
     private WebDriver driver;
@@ -16,7 +18,7 @@ public class NavigationBetweenConstructorSectionsTests {
     @Before
     public void setUp() {
         driver = WebDriverCreator.getWebDriver();
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(MAIN_PAGE_URL);
         mainPage = new BurgerMainPage(driver);
         mainPage.waitForPageLoad();
     }
